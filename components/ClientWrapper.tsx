@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Card } from "@/components/Card";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { User } from "@/types/user";
+import { useCallback } from "react";
 
 const cardWidth = 402; // width + border + margin
 
@@ -29,27 +30,27 @@ export const ClientWrapper = ({
   const canFit = width > 0 ? Math.min(Math.floor(width / cardWidth), currentPageSize) : currentPageSize;
   const pageWidth = width > 0 ? canFit * cardWidth : 0;
 
-  const handlePageChange = (newPage: number) => {
+  const handlePageChange = useCallback ((newPage: number) => {
     router.push(`?page=${newPage}&pageSize=${currentPageSize}`);
-  };
+  }, [router, currentPageSize]);
 
-  const handlePageSizeChange = (newPageSize: number) => {
+  const handlePageSizeChange = useCallback ((newPageSize: number) => {
     router.push(`?page=1&pageSize=${newPageSize}`);
-  };
+  }, [router]);
 
   return (
     <main
-      className="font-sans p-5"
-      style={width > 0 ? {
-        '--page-width': `${pageWidth}px`,
-        '--header-margin': `${(width - pageWidth - 10) / 2}px`
-      } as React.CSSProperties : undefined}
+      className="font-sans p-6"
+      style={{
+        '--page-width': width > 0 ? `${pageWidth}px` : '85vw',
+        '--header-margin': width > 0 ? `${(width - pageWidth - 10) / 2}px` : '10px'
+      } as React.CSSProperties}
       suppressHydrationWarning
     >
-      <h2 className={width > 0 ? "ml-[var(--header-margin)]" : ""}>
-        {users?.length} {users.length === 1 ? "User" : "Users"}
-      </h2>
-      <div className={`mx-auto flex flex-col flex-wrap justify-center ${width > 0 ? 'w-[var(--page-width)]' : ''}`}>
+      <div className={`mx-auto flex flex-col flex-wrap justify-center w-[var(--page-width)]`}>
+        <h2 className={"ml-[var(--header-margin)]"}>
+            {users?.length} {users.length === 1 ? "User" : "Users"}
+        </h2>
         <ul className="flex flex-wrap list-none justify-start p-0">
           {users.map((user) => (
             <Card key={user.id} user={user} />
@@ -82,6 +83,7 @@ export const ClientWrapper = ({
             onChange={(event) => {
               handlePageSizeChange(Number(event.target.value));
             }}
+            id="page-size-select"
           >
             <option value={1}>1</option>
             <option value={2}>2</option>
@@ -91,8 +93,8 @@ export const ClientWrapper = ({
             <option value={6}>6</option>
           </select>
         </div>
+        {children}
       </div>
-      {children}
     </main>
   );
 };
