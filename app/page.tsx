@@ -3,11 +3,18 @@ import { User, RandomUserResponse } from "@/types/user";
 import { ClientWrapper } from "@/components/ClientWrapper";
 
 const totalPages = 10; // Random User API doesn't provide total pages, so we set a reasonable max
+const API_URL = 'https://randomuser.me/api/';
+const API_SEED = 'lafe';
 
 async function fetchUsers(page: number, pageSize: number): Promise<User[]> {
   try {
+    const url = new URL(API_URL);
+    url.searchParams.set('page', page.toString());
+    url.searchParams.set('results', pageSize.toString());
+    url.searchParams.set('seed', API_SEED);
+
     const response = await fetch(
-      `https://randomuser.me/api/?page=${page}&results=${pageSize}&seed=lafe`,
+      url.toString(),
       { cache: 'no-store' } // Ensures fresh data on each request
     );
     
