@@ -29,24 +29,23 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## API Configuration
 
-The app fetches users from the **Random User Generator API**:
+The app now uses an internal API and shared server-side data layer:
 
-```
-https://randomuser.me/api/?page={page}&results={pageSize}&seed=lafe
-```
+- `GET /api/users?page={page}&pageSize={pageSize}` for paginated users
+- `GET /api/avatars/{id}?name={fullName}` for generated avatar SVGs
 
-This public API provides:
+Core implementation files:
 
-- ✅ Realistic user data with profile pictures
-- ✅ Built-in pagination support
-- ✅ No authentication required
-- ✅ Consistent results (using a seed parameter)
+- `lib/users.ts` shared data service used by SSR and API routes
+- `app/api/users/route.ts` internal users endpoint
+- `app/api/avatars/[id]/route.ts` internal avatar image endpoint
+- `app/page.tsx` server-rendered page using `getUsersPage(...)` directly
 
-If you want to use a different API:
+Image strategy options for future iterations:
 
-1. Update the API URL in `app/page.tsx` (line 22-23)
-2. Adjust the data transformation logic to match your API's response structure
-3. Update the TypeScript interfaces in `types/user.ts` as needed
+1. Keep generated SVG avatars (current): no external dependency, deterministic, very fast.
+2. Store static image assets in `public/avatars/` and return those URLs from `lib/users.ts`.
+3. Proxy an external image provider through your API route if you need photoreal profile images.
 
 ## Project Structure
 

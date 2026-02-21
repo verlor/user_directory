@@ -11,7 +11,8 @@ export const Details = () => {
       </section>
       <section className="flex flex-col">
         <a href="https://codesandbox.io/" target="_blank"> Code Sandbox </a>
-        <a href="https://randomuser.me/api/?page=1&results=6" target="_blank"> Random User API </a>
+        <a href="/api/users?page=1&pageSize=6" target="_blank"> Internal Users API </a>
+        <a href="/api/avatars/1?name=Liam%20Patel" target="_blank"> Internal Avatar API </a>
       </section>
     </article>
   );
