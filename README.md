@@ -41,6 +41,23 @@ Core implementation files:
 - `app/api/avatars/[id]/route.ts` internal avatar image endpoint
 - `app/page.tsx` server-rendered page using `getUsersPage(...)` directly
 
+### CORS for external sandbox apps
+
+`middleware.ts` applies CORS headers to all `/api/*` routes based on an origin allowlist.
+
+Set allowed origins in your environment:
+
+```bash
+# .env.local
+CORS_ALLOWED_ORIGINS=http://localhost:3001,https://my-sandbox.example.com
+```
+
+Notes:
+
+- Include only exact origins (scheme + host + port).
+- Keep your internal app origin out of this list unless you need browser cross-origin calls.
+- Restart the dev server after changing `.env.local`.
+
 Image strategy options for future iterations:
 
 1. Keep generated SVG avatars (current): no external dependency, deterministic, very fast.
