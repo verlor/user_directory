@@ -11,6 +11,32 @@ const LAST_NAMES = [
 ];
 
 const TOTAL_USERS = 60;
+const PORTRAITS = [
+  "/avatars/portrait-men-1.jpg",
+  "/avatars/portrait-men-2.jpg",
+  "/avatars/portrait-men-3.jpg",
+  "/avatars/portrait-men-4.jpg",
+  "/avatars/portrait-men-5.jpg",
+  "/avatars/portrait-men-6.jpg",
+  "/avatars/portrait-men-7.jpg",
+  "/avatars/portrait-men-8.jpg",
+  "/avatars/portrait-men-9.jpg",
+  "/avatars/portrait-men-10.jpg",
+  "/avatars/portrait-men-11.jpg",
+  "/avatars/portrait-men-12.jpg",
+  "/avatars/portrait-women-1.jpg",
+  "/avatars/portrait-women-2.jpg",
+  "/avatars/portrait-women-3.jpg",
+  "/avatars/portrait-women-4.jpg",
+  "/avatars/portrait-women-5.jpg",
+  "/avatars/portrait-women-6.jpg",
+  "/avatars/portrait-women-7.jpg",
+  "/avatars/portrait-women-8.jpg",
+  "/avatars/portrait-women-9.jpg",
+  "/avatars/portrait-women-10.jpg",
+  "/avatars/portrait-women-11.jpg",
+  "/avatars/portrait-women-12.jpg",
+];
 
 function slugifyName(name: string): string {
   return name.toLowerCase().replace(/[^a-z]+/g, ".").replace(/^\.|\.$/g, "");
@@ -27,7 +53,7 @@ function buildUser(id: number): User {
     first_name: firstName,
     last_name: lastName,
     email: `${handle}@example.com`,
-    avatar: `/api/avatars/${id}?name=${encodeURIComponent(fullName)}`,
+    avatar: PORTRAITS[(id - 1) % PORTRAITS.length],
   };
 }
 

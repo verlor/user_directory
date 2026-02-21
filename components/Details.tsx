@@ -12,7 +12,9 @@ export const Details = () => {
       <section className="flex flex-col">
         <a href="https://codesandbox.io/" target="_blank"> Code Sandbox </a>
         <a href="/api/users?page=1&pageSize=6" target="_blank"> Internal Users API </a>
-        <a href="/api/avatars/1?name=Liam%20Patel" target="_blank"> Internal Avatar API </a>
+        <a href="/avatars/portrait-men-1.jpg" target="_blank"> Curated Portrait Sample</a>
+        <a href="/api/avatars/1?name=Liam%20Patel&style=persona" target="_blank"> Avatar API (Persona)</a>
+        <a href="/api/avatars/1?name=Liam%20Patel&style=pattern" target="_blank"> Avatar API (Pattern)</a>
       </section>
     </article>
   );
